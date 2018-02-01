@@ -21,10 +21,16 @@ const (
 	// headerRateReset     = "RateLimit-Reset"
 )
 
+type Auth struct {
+	Username string
+	Password string
+}
+
 // Client manages communication with Graylog API.
 type Client struct {
 	// HTTP client used to communicate with the API
 	client *http.Client
+	auth   Auth
 
 	// Base URL for requests
 	BaseURL *url.URL
@@ -35,6 +41,7 @@ type Client struct {
 	// Services used for communicating with the API
 	User      UserService
 	UserToken UserTokenService
+	Search    SearchService
 
 	// Optional function called after every successful request made to the APIs
 	onRequestCompleted RequestCompletionCallback
@@ -70,6 +77,7 @@ func NewClient(httpClient *http.Client, graylogBaseURL string) *Client {
 	}
 	c.User = &UserServiceOp{client: c}
 	c.UserToken = &UserTokenServiceOp{client: c}
+	c.Search = &SearchServiceOp{client: c}
 
 	return c
 }
@@ -130,6 +138,12 @@ func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) (*Res
 	if err != nil {
 		return response, err
 	}
+
+	// data, err := ioutil.ReadAll(resp.Body)
+	// if err != nil {
+	// 	logrus.Panic(err)
+	// }
+	// logrus.Infof("Data: %s", data)
 
 	if v != nil {
 		if w, ok := v.(io.Writer); ok {
