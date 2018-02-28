@@ -21,6 +21,7 @@ const (
 	// headerRateReset     = "RateLimit-Reset"
 )
 
+// Auth contains the username and password for the connection
 type Auth struct {
 	Username string
 	Password string

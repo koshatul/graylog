@@ -77,14 +77,14 @@ func (s *UserServiceOp) get(ctx context.Context, path string) (User, *Response, 
 	return *user, resp, err
 }
 
-// List all user tokens.
+// List all users.
 func (s *UserServiceOp) List(ctx context.Context) ([]User, *Response, error) {
 	path := usersBasePath
 
 	return s.list(ctx, path)
 }
 
-// List all user tokens.
+// Get user.
 func (s *UserServiceOp) Get(ctx context.Context, user string) (User, *Response, error) {
 	path := fmt.Sprintf("%s/%s", usersBasePath, user)
 
