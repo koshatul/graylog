@@ -10,7 +10,7 @@ import (
 )
 
 // TimeFormat is the recognised time format for the Graylog API
-const TimeFormat = "2006-01-02T15:04:05.999Z"
+const TimeFormat = "2006-01-02T15:04:05.000Z"
 
 // Response is a Graylog API response. This wraps the standard http.Response returned from Graylog.
 type Response struct {
